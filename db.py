@@ -1,34 +1,38 @@
-from flask import Flask, request, jsonify
+from flask import Flask as fl
+from flask import request as rqt
+from flask import jsonify as jsf
 
-app = Flask(__name__)
+dbA = fl(__name__)
+Usuario = []
 
-# Simulando um armazenamento em memória para os usuários
-users = []
-
-class User:
+class Usuário:
     def __init__(self, cpf, nome, data_nascimento):
         self.cpf = cpf
         self.nome = nome
         self.data_nascimento = data_nascimento
 
-@app.route('/user', methods=['POST'])
-def create_user():
-    data = request.json
-    cpf = data['cpf']
-    nome = data['nome']
-    data_nascimento = data['data_nascimento']
+@dbA.route('/usuario', methods=['POST'])
+def setUsuario():
+    dado = rqt.json
+    cpf = dado['cpf']
+    nome = dado['nome']
+    data_nascimento = dado['data_nascimento']
     
-    user = User(cpf, nome, data_nascimento)
-    users.append(user)
-    
-    return jsonify({'message': 'Usuário criado com sucesso!'})
+    Pessoa = Usuário(cpf, nome, data_nascimento)
+    Usuario.append(Pessoa)
+    return jsf({'mensagem': 'Usuário criado!'})
 
-@app.route('/user/<int:cpf>', methods=['GET'])
-def get_user(cpf):
-    user = next((user for user in users if user.cpf == cpf), None)
-    if user:
-        return jsonify({'cpf': user.cpf, 'nome': user.nome, 'data_nascimento': user.data_nascimento})
-    return jsonify({'message': 'Usuário não encontrado'}), 404
+@dbA.route('/<int:cpf>', methods=['GET'])
+def getUsuario(cpf):
+
+    Pessoa = None
+    for Pessoa in Usuario:
+        if Pessoa.cpf == cpf:
+            break
+
+    if Pessoa:
+        return jsf({'cpf': Pessoa.cpf, 'nome': Pessoa.nome, 'data_nascimento': Pessoa.data_nascimento})
+    return jsf({'mensagem': 'não encontrado'}), 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    dbA.run(debug=True)
