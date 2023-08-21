@@ -2,6 +2,14 @@ from flask import Flask as fl
 from flask import request as rqt
 from flask import jsonify as jsf
 
+#POST : http://127.0.0.1:5000/usuario
+#GET  : http://127.0.0.1:5000/cpf
+
+# "cpf": 123456789,
+# "nome": "Siclano",
+# "data_nascimento": "2000-01-01" 
+    
+
 dbA = fl(__name__)
 Usuario = []
 
