@@ -5,11 +5,21 @@ from flask import jsonify as jsf
 #POST : http://127.0.0.1:5000/usuario
 #GET  : http://127.0.0.1:5000/cpf
 
-# "cpf": 123456789,
-# "nome": "Siclano",
-# "data_nascimento": "2000-01-01" 
-    
+"""
+{
+    "cpf": 7219365551,
+    "nome": "matheus 1",
+    "data_nascimento": "2003-04-28"
+}
 
+{
+    "cpf": 7219365552,
+    "nome": "matheus 2",
+    "data_nascimento": "2002-04-28"
+}
+"""   
+    
+  
 dbA = fl(__name__)
 Usuario = []
 
@@ -40,7 +50,7 @@ def getUsuario(cpf):
 
     if Pessoa:
         return jsf({'cpf': Pessoa.cpf, 'nome': Pessoa.nome, 'data_nascimento': Pessoa.data_nascimento})
-    return jsf({'mensagem': 'não encontrado'}), 404
+    return jsf({'mensagem': 'nao encontrado'}), 404
 
 if __name__ == '__main__':
     dbA.run(debug=True)
